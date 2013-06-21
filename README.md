@@ -46,7 +46,7 @@ Put this file to `~/Library/LaunchAgents`. A symbolic link would be better than 
 
 Load a deamon with launchd.
 
-	$ launchctl load ~/Library/LaunchAgents/com.github.com.jmblog.iCloudPhotoBackupFlickr.plist
+	$ launchctl load ~/Library/LaunchAgents/com.github.jmblog.iCloudPhotoBackupFlickr.plist
 
 Check whether the deamon was loaded successfully.
 
@@ -66,7 +66,7 @@ Now, the setup is done. Try take a photo with a device running iCloud (e.g. iPho
 
 ### Stopping the deamon
 
-	$ launchctl unload ~/Library/LaunchAgents/com.github.com.jmblog.iCloudPhotoBackupFlickr.plist
+	$ launchctl unload ~/Library/LaunchAgents/com.github.jmblog.iCloudPhotoBackupFlickr.plist
 
 ### Checking Log
 
