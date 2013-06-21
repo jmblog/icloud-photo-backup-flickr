@@ -1,0 +1,4 @@
+/node_modules/
+com.github.jmblog.iCloudPhotoBackupFlickr.plist
+/history/*
+.DS_Store
