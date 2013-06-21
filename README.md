@@ -34,7 +34,7 @@ You can back up automatically when iCloud has downloaded new photos to your Mac.
 
 ### Launching a deamon
 
-First, Prepare a plist file with this script.
+First, prepare a plist file with this script.
 
 	$ node create-plist.js
 
