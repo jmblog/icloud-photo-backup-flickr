@@ -13,8 +13,6 @@ var fs = require('fs'),
 // Synced files by iCloud Photo Stream are put in this directory.
 var icloud_dir = process.env['HOME'] + '/Library/Application\ Support/iLifeAssetManagement/assets/sub';
 
-console.log('Start uploading photos...');
-
 confy.get('icloud-photo-backup-flickr', function(err, conf) {
   if (err) {
     console.error('Error: ' + err);
@@ -43,8 +41,11 @@ confy.get('icloud-photo-backup-flickr', function(err, conf) {
       }
     });
     
-    console.log(photos.length + ' files are being uploaded'); 
-    uploadFiles(client, photos, photos.length);
+    if (photos.length) {
+      console.log('Start uploading photos...');
+      console.log(photos.length + ' files are being uploaded'); 
+      uploadFiles(client, photos, photos.length);
+    }
   }
 });
     
