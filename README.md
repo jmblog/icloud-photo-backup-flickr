@@ -1,4 +1,4 @@
-# icloud-photo-backup-flickr [![Build Status](https://secure.travis-ci.org/jmblog/icloud-photo-backup-flickr.png?branch=master)](http://travis-ci.org/jmblog/icloud-photo-flickr-backup)
+# icloud-photo-backup-flickr
 
 A tool to back up iCloud Photo Stream to Flickr for Mac OS X
 
