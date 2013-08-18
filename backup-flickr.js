@@ -7,7 +7,7 @@ var fs = require('fs'),
     _ = require('lodash'),
     confy = require('confy'),
     colors = require('colors'),
-    Flickr = require('flickr-with-uploads').Flickr,
+    flickr = require('flickr-with-uploads'),
     history = require('./lib/history');
 
 // Synced files by iCloud Photo Stream are put in this directory.
@@ -23,7 +23,7 @@ confy.get('icloud-photo-backup-flickr', function(err, conf) {
     process.exit(1);
   } else {
     var photos = []; 
-    var client = new Flickr(conf.api_key, conf.api_secret, conf.access_token, conf.access_token_secret);
+    var api = flickr(conf.api_key, conf.api_secret, conf.access_token, conf.access_token_secret);
     var hashKeys = _.filter(fs.readdirSync(icloud_dir), function(dir) { return !history.exists(dir);});
     
     _.forEach(hashKeys, function(hkey) {
@@ -44,20 +44,22 @@ confy.get('icloud-photo-backup-flickr', function(err, conf) {
     if (photos.length) {
       console.log('Start uploading photos...');
       console.log(photos.length + ' files are being uploaded'); 
-      uploadFiles(client, photos, photos.length);
+      uploadFiles(api, photos, photos.length);
     }
   }
 });
     
-function uploadFiles(client, photos, total) {
+function uploadFiles(api, photos, total) {
   var params = {},
       photo = photos.shift(),
       cnt = total - photos.length;
   
   if (photo !== undefined) {
     console.log('(' + cnt + '/' + total + ') Uploading... ' + photo.hkey + '/' + photo.filename);
-    params = { photo: fs.createReadStream(path.join(icloud_dir, photo.hkey, photo.filename), { flags: 'r' }) };
-    api('upload', params, function(err, response) {
+    api({
+      method: 'upload',
+      photo: fs.createReadStream(path.join(icloud_dir, photo.hkey, photo.filename), { flags: 'r' })
+    },  function(err, response) {
       if (err) {
         console.error(err);
       } else {
@@ -66,12 +68,9 @@ function uploadFiles(client, photos, total) {
           if (err) {
             console.error(err);
           }
-          uploadFiles(client, photos, total);
+          uploadFiles(api, photos, total);
         });
       }
     });
-  }
-  function api(method_name, data, callback) {
-    return client.createRequest(method_name, data, true, callback).send();
   }
 }
